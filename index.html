@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CP TOP3 💖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bgLight: '#f7f3ff',
+        primaryRose: '#ec4899',
+        secondaryPurple: '#8b5cf6',
+        cardLight: '#ffffff',
+        textMain: '#1f2937',
+        textSoft: '#6b7280'
+      },
+      fontFamily: { sans: ['system-ui','sans-serif'] }
+    }
+  }
+}
+</script>
+<style type="text/tailwindcss">
+@layer utilities {
+  .text-shadow-soft { text-shadow: 0 0 8px rgba(236,72,153,0.35); }
+  .card-shadow-soft { box-shadow: 0 10px 25px rgba(139,92,246,0.15); }
+  .btn-shadow { box-shadow: 0 8px 20px rgba(236,72,153,0.25); }
+  .stack-card { transform-origin: center; }
+}
+</style>
+</head>
+<body class="bg-bgLight min-h-screen text-textMain overflow-x-hidden">
+<div id="app"></div>
+
+<script>
+// ==========【全部132组CP已录入】==========
+const cpList = [
+  {id:1, name:"棍宝", desc:"朱志鑫 × 张泽禹", img:""},
+  {id:2, name:"志极", desc:"朱志鑫 × 张极", img:""},
+  {id:3, name:"鑫左", desc:"朱志鑫 × 左航", img:""},
+  {id:4, name:"朱苏", desc:"朱志鑫 × 苏新皓", img:""},
+  {id:5, name:"朱童", desc:"朱志鑫 × 童禹坤", img:""},
+  {id:6, name:"双鑫", desc:"朱志鑫 × 邓佳鑫", img:""},
+  {id:7, name:"朱穆", desc:"朱志鑫 × 穆祉丞", img:""},
+  {id:8, name:"棍墨", desc:"朱志鑫 × 张子墨", img:""},
+  {id:9, name:"棍朔", desc:"朱志鑫 × 黄朔", img:""},
+  {id:10, name:"朱余", desc:"朱志鑫 × 余宇涵", img:""},
+  {id:11, name:"棍顺", desc:"朱志鑫 × 张峻豪", img:""},
+  {id:12, name:"宝棍", desc:"张泽禹 × 朱志鑫", img:""},
+  {id:13, name:"禹极", desc:"张泽禹 × 张极", img:""},
+  {id:14, name:"禹航", desc:"张泽禹 × 左航", img:""},
+  {id:15, name:"宝铲", desc:"张泽禹 × 苏新皓", img:""},
+  {id:16, name:"双禹", desc:"张泽禹 × 童禹坤", img:""},
+  {id:17, name:"宝音", desc:"张泽禹 × 邓佳鑫", img:""},
+  {id:18, name:"宝恩", desc:"张泽禹 × 穆祉丞", img:""},
+  {id:19, name:"宝墨", desc:"张泽禹 × 张子墨", img:""},
+  {id:20, name:"宝朔", desc:"张泽禹 × 黄朔", img:""},
+  {id:21, name:"宝涵", desc:"张泽禹 × 余宇涵", img:""},
+  {id:22, name:"风调禹顺", desc:"张泽禹 × 张峻豪", img:""},
+  {id:23, name:"极志", desc:"张极 × 朱志鑫", img:""},
+  {id:24, name:"极禹", desc:"张极 × 张泽禹", img:""},
+  {id:25, name:"极地航行", desc:"张极 × 左航", img:""},
+  {id:26, name:"极皓", desc:"张极 × 苏新皓", img:""},
+  {id:27, name:"极童", desc:"张极 × 童禹坤", img:""},
+  {id:28, name:"极佳", desc:"张极 × 邓佳鑫", img:""},
+  {id:29, name:"极丞", desc:"张极 × 穆祉丞", img:""},
+  {id:30, name:"极墨", desc:"张极 × 张子墨", img:""},
+  {id:31, name:"极朔", desc:"张极 × 黄朔", img:""},
+  {id:32, name:"极涵", desc:"张极 × 余宇涵", img:""},
+  {id:33, name:"极豪", desc:"张极 × 张峻豪", img:""},
+  {id:34, name:"左朱", desc:"左航 × 朱志鑫", img:""},
+  {id:35, name:"航禹", desc:"左航 × 张泽禹", img:""},
+  {id:36, name:"航极", desc:"左航 × 张极", img:""},
+  {id:37, name:"左新房", desc:"左航 × 苏新皓", img:""},
+  {id:38, name:"航童", desc:"左航 × 童禹坤", img:""},
+  {id:39, name:"左邓", desc:"左航 × 邓佳鑫", img:""},
+  {id:40, name:"航丞", desc:"左航 × 穆祉丞", img:""},
+  {id:41, name:"航墨", desc:"左航 × 张子墨", img:""},
+  {id:42, name:"航朔", desc:"左航 × 黄朔", img:""},
+  {id:43, name:"航涵", desc:"左航 × 余宇涵", img:""},
+  {id:44, name:"航顺", desc:"左航 × 张峻豪", img:""},
+  {id:45, name:"苏朱", desc:"苏新皓 × 朱志鑫", img:""},
+  {id:46, name:"新禹", desc:"苏新皓 × 张泽禹", img:""},
+  {id:47, name:"皓极", desc:"苏新皓 × 张极", img:""},
+  {id:48, name:"苏左", desc:"苏新皓 × 左航", img:""},
+  {id:49, name:"苏童", desc:"苏新皓 × 童禹坤", img:""},
+  {id:50, name:"铲音", desc:"苏新皓 × 邓佳鑫", img:""},
+  {id:51, name:"苏穆", desc:"苏新皓 × 穆祉丞", img:""},
+  {id:52, name:"铲墨", desc:"苏新皓 × 张子墨", img:""},
+  {id:53, name:"铲朔", desc:"苏新皓 × 黄朔", img:""},
+  {id:54, name:"皓涵", desc:"苏新皓 × 余宇涵", img:""},
+  {id:55, name:"铲顺", desc:"苏新皓 × 张峻豪", img:""},
+  {id:56, name:"童朱", desc:"童禹坤 × 朱志鑫", img:""},
+  {id:57, name:"双禹", desc:"童禹坤 × 张泽禹", img:""},
+  {id:58, name:"毛豆", desc:"童禹坤 × 张极", img:""},
+  {id:59, name:"童航", desc:"童禹坤 × 左航", img:""},
+  {id:60, name:"童苏", desc:"童禹坤 × 苏新皓", img:""},
+  {id:61, name:"童音", desc:"童禹坤 × 邓佳鑫", img:""},
+  {id:62, name:"童穆", desc:"童禹坤 × 穆祉丞", img:""},
+  {id:63, name:"童墨", desc:"童禹坤 × 张子墨", img:""},
+  {id:64, name:"童朔", desc:"童禹坤 × 黄朔", img:""},
+  {id:65, name:"童余", desc:"童禹坤 × 余宇涵", img:""},
+  {id:66, name:"童花顺", desc:"童禹坤 × 张峻豪", img:""},
+  {id:67, name:"双鑫", desc:"邓佳鑫 × 朱志鑫", img:""},
+  {id:68, name:"音宝", desc:"邓佳鑫 × 张泽禹", img:""},
+  {id:69, name:"音极", desc:"邓佳鑫 × 张极", img:""},
+  {id:70, name:"邓左", desc:"邓佳鑫 × 左航", img:""},
+  {id:71, name:"邓苏", desc:"邓佳鑫 × 苏新皓", img:""},
+  {id:72, name:"邓童", desc:"邓佳鑫 × 童禹坤", img:""},
+  {id:73, name:"邓穆", desc:"邓佳鑫 × 穆祉丞", img:""},
+  {id:74, name:"邓墨", desc:"邓佳鑫 × 张子墨", img:""},
+  {id:75, name:"邓朔", desc:"邓佳鑫 × 黄朔", img:""},
+  {id:76, name:"邓余", desc:"邓佳鑫 × 余宇涵", img:""},
+  {id:77, name:"邓顺", desc:"邓佳鑫 × 张峻豪", img:""},
+  {id:78, name:"穆棍", desc:"穆祉丞 × 朱志鑫", img:""},
+  {id:79, name:"恩宝", desc:"穆祉丞 × 张泽禹", img:""},
+  {id:80, name:"穆极", desc:"穆祉丞 × 张极", img:""},
+  {id:81, name:"穆航", desc:"穆祉丞 × 左航", img:""},
+  {id:82, name:"穆苏", desc:"穆祉丞 × 苏新皓", img:""},
+  {id:83, name:"穆童", desc:"穆祉丞 × 童禹坤", img:""},
+  {id:84, name:"穆音", desc:"穆祉丞 × 邓佳鑫", img:""},
+  {id:85, name:"馒馍", desc:"穆祉丞 × 张子墨", img:""},
+  {id:86, name:"穆朔", desc:"穆祉丞 × 黄朔", img:""},
+  {id:87, name:"穆余", desc:"穆祉丞 × 余宇涵", img:""},
+  {id:88, name:"穆顺", desc:"穆祉丞 × 张峻豪", img:""},
+  {id:89, name:"墨棍", desc:"张子墨 × 朱志鑫", img:""},
+  {id:90, name:"墨宝", desc:"张子墨 × 张泽禹", img:""},
+  {id:91, name:"墨极", desc:"张子墨 × 张极", img:""},
+  {id:92, name:"墨航", desc:"张子墨 × 左航", img:""},
+  {id:93, name:"墨铲", desc:"张子墨 × 苏新皓", img:""},
+  {id:94, name:"墨童", desc:"张子墨 × 童禹坤", img:""},
+  {id:95, name:"墨音", desc:"张子墨 × 邓佳鑫", img:""},
+  {id:96, name:"墨恩", desc:"张子墨 × 穆祉丞", img:""},
+  {id:97, name:"墨朔", desc:"张子墨 × 黄朔", img:""},
+  {id:98, name:"墨余", desc:"张子墨 × 余宇涵", img:""},
+  {id:99, name:"墨顺", desc:"张子墨 × 张峻豪", img:""},
+  {id:100, name:"朔棍", desc:"黄朔 × 朱志鑫", img:""},
+  {id:101, name:"朔宝", desc:"黄朔 × 张泽禹", img:""},
+  {id:102, name:"朔极", desc:"黄朔 × 张极", img:""},
+  {id:103, name:"朔航", desc:"黄朔 × 左航", img:""},
+  {id:104, name:"朔苏", desc:"黄朔 × 苏新皓", img:""},
+  {id:105, name:"朔童", desc:"黄朔 × 童禹坤", img:""},
+  {id:106, name:"朔佳", desc:"黄朔 × 邓佳鑫", img:""},
+  {id:107, name:"朔恩", desc:"黄朔 × 穆祉丞", img:""},
+  {id:108, name:"朔墨", desc:"黄朔 × 张子墨", img:""},
+  {id:109, name:"朔余", desc:"黄朔 × 余宇涵", img:""},
+  {id:110, name:"朔顺", desc:"黄朔 × 张峻豪", img:""},
+  {id:111, name:"余朱", desc:"余宇涵 × 朱志鑫", img:""},
+  {id:112, name:"余额宝", desc:"余宇涵 × 张泽禹", img:""},
+  {id:113, name:"涵极", desc:"余宇涵 × 张极", img:""},
+  {id:114, name:"涵航", desc:"余宇涵 × 左航", img:""},
+  {id:115, name:"余苏", desc:"余宇涵 × 苏新皓", img:""},
+  {id:116, name:"涵坤", desc:"余宇涵 × 童禹坤", img:""},
+  {id:117, name:"余邓", desc:"余宇涵 × 邓佳鑫", img:""},
+  {id:118, name:"余穆", desc:"余宇涵 × 穆祉丞", img:""},
+  {id:119, name:"涵墨", desc:"余宇涵 × 张子墨", img:""},
+  {id:120, name:"涵朔", desc:"余宇涵 × 黄朔", img:""},
+  {id:121, name:"涵顺", desc:"余宇涵 × 张峻豪", img:""},
+  {id:122, name:"顺棍", desc:"张峻豪 × 朱志鑫", img:""},
+  {id:123, name:"豪禹", desc:"张峻豪 × 张泽禹", img:""},
+  {id:124, name:"豪极", desc:"张峻豪 × 张极", img:""},
+  {id:125, name:"豪吃懒左", desc:"张峻豪 × 左航", img:""},
+  {id:126, name:"顺铲", desc:"张峻豪 × 苏新皓", img:""},
+  {id:127, name:"豪坤", desc:"张峻豪 × 童禹坤", img:""},
+  {id:128, name:"顺音", desc:"张峻豪 × 邓佳鑫", img:""},
+  {id:129, name:"豪丞", desc:"张峻豪 × 穆祉丞", img:""},
+  {id:130, name:"顺墨", desc:"张峻豪 × 张子墨", img:""},
+  {id:131, name:"顺朔", desc:"张峻豪 × 黄朔", img:""},
+  {id:132, name:"豪涵无际", desc:"张峻豪 × 余宇涵", img:""},
+];
+// ==============================================
+
+// 全局状态
+const state = {
+  page: "home", // home / battle / result
+  winnerBracket: [],
+  loserBracket: [],
+  currentMatch: null,
+  matchCount:0,
+  top3:[]
+};
+
+// 渲染入口
+function render(){
+  const app = document.getElementById("app");
+  if(state.page === "home") app.innerHTML = renderHome();
+  else if(state.page === "battle") app.innerHTML = renderBattle();
+  else if(state.page === "result") app.innerHTML = renderResult();
+  bindEvents();
+}
+
+// 首页：堆叠卡片 + 开始按钮
+function renderHome(){
+const sampleCP = cpList[0];
+return `
+<div class="min-h-screen flex flex-col items-center justify-center px-6 py-10">
+  <h1 class="text-[clamp(2.4rem,8vw,3.6rem)] font-bold text-secondaryPurple text-shadow-soft text-center">CP TOP3 💖</h1>
+  <div class="mt-3 text-textSoft text-center">
+    <p>哪对CP更让你心动</p>
+    <p>两两选择，胜者晋级</p>
+    <p>直到选出最终 Top 3</p>
+  </div>
+
+  <div class="relative w-[280px] h-[340px] my-10">
+    <div class="stack-card absolute top-0 left-0 w-full h-full rotate-[-12deg] bg-white rounded-xl overflow-hidden card-shadow-soft border border-pink-100"></div>
+    <div class="stack-card absolute top-0 left-0 w-full h-full rotate-[-6deg] bg-white rounded-xl overflow-hidden card-shadow-soft border border-pink-100"></div>
+    <div class="stack-card absolute top-0 left-0 w-full h-full rotate-[0deg] bg-white rounded-xl overflow-hidden card-shadow-soft border border-pink-100">
+      ${sampleCP.img ? `<img src="${sampleCP.img}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-textSoft">CP图片</div>`}
+    </div>
+  </div>
+
+  <button id="startBtn" class="btn-shadow bg-gradient-to-r from-rose-400 to-purple-500 text-white text-xl font-bold px-14 py-4 rounded-full hover:opacity-90 transition-opacity">
+    开始选择 ✨
+  </button>
+</div>
+`
+}
+
+// 对战页面：上下卡片，中间VS
+function renderBattle(){
+  const m = state.currentMatch;
+  const p1 = m.player1;
+  const p2 = m.player2;
+return `
+<div class="min-h-screen flex flex-col px-6 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <button id="backHome" class="bg-gray-100 text-textMain px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">← 返回首页</button>
+    <span class="text-textSoft">已选择：${state.matchCount}次</span>
+  </div>
+  <div class="text-center mb-6">
+    <p class="text-secondaryPurple tracking-widest">ROUND 01</p>
+    <h2 class="text-3xl font-bold my-2 text-secondaryPurple">CP TOP3</h2>
+    <p class="text-textSoft">哪对CP更让你心动 · 点击选择</p>
+  </div>
+
+  <div class="flex-1 flex flex-col items-center justify-center gap-6">
+    <!-- 上方卡片 -->
+    <div data-pick="p1" class="cp-card w-full max-w-sm bg-white rounded-2xl overflow-hidden cursor-pointer card-shadow-soft border border-pink-100 hover:scale-[1.02] transition-transform">
+      ${p1.img ? `<img src="${p1.img}" class="w-full h-[240px] object-cover">` : `<div class="w-full h-[240px] bg-gray-50 flex items-center justify-center text-textSoft">图片占位</div>`}
+      <div class="p-4 text-center">
+        <h3 class="text-2xl font-bold text-textMain">${p1.name}</h3>
+        <p class="text-textSoft">${p1.desc}</p>
+      </div>
+    </div>
+
+    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-rose-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold shadow-lg">VS</div>
+
+    <!-- 下方卡片 -->
+    <div data-pick="p2" class="cp-card w-full max-w-sm bg-white rounded-2xl overflow-hidden cursor-pointer card-shadow-soft border border-pink-100 hover:scale-[1.02] transition-transform">
+      ${p2.img ? `<img src="${p2.img}" class="w-full h-[240px] object-cover">` : `<div class="w-full h-[240px] bg-gray-50 flex items-center justify-center text-textSoft">图片占位</div>`}
+      <div class="p-4 text-center">
+        <h3 class="text-2xl font-bold text-textMain">${p2.name}</h3>
+        <p class="text-textSoft">${p2.desc}</p>
+      </div>
+    </div>
+  </div>
+</div>
+`
+}
+
+// 结果页：TOP1在上，TOP2 TOP3并排
+function renderResult(){
+  const [t1,t2,t3] = state.top3;
+return `
+<div class="min-h-screen flex flex-col items-center justify-center px-6 py-10">
+  <h2 class="text-3xl font-bold text-secondaryPurple text-shadow-soft mb-10">最终 TOP3</h2>
+
+  <!-- TOP1单独在上 -->
+  <div class="w-full max-w-sm bg-white rounded-2xl overflow-hidden card-shadow-soft border border-pink-100 mb-8">
+    ${t1.img ? `<img src="${t1.img}" class="w-full h-[260px] object-cover">` : `<div class="w-full h-[260px] bg-gray-50 flex items-center justify-center text-textSoft">图片占位</div>`}
+    <div class="p-4 text-center">
+      <span class="text-secondaryPurple font-bold">TOP 1</span>
+      <h3 class="text-2xl font-bold mt-1 text-textMain">${t1.name}</h3>
+      <p class="text-textSoft">${t1.desc}</p>
+    </div>
+  </div>
+
+  <!-- TOP2 TOP3并排 -->
+  <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
+    <div class="bg-white rounded-2xl overflow-hidden card-shadow-soft border border-pink-100">
+      ${t2.img ? `<img src="${t2.img}" class="w-full h-[200px] object-cover">` : `<div class="w-full h-[200px] bg-gray-50 flex items-center justify-center text-textSoft">图片占位</div>`}
+      <div class="p-3 text-center">
+        <span class="text-secondaryPurple font-bold">TOP 2</span>
+        <h3 class="text-xl font-bold text-textMain">${t2.name}</h3>
+        <p class="text-textSoft text-sm">${t2.desc}</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl overflow-hidden card-shadow-soft border border-pink-100">
+      ${t3.img ? `<img src="${t3.img}" class="w-full h-[200px] object-cover">` : `<div class="w-full h-[200px] bg-gray-50 flex items-center justify-center text-textSoft">图片占位</div>`}
+      <div class="p-3 text-center">
+        <span class="text-secondaryPurple font-bold">TOP 3</span>
+        <h3 class="text-xl font-bold text-textMain">${t3.name}</h3>
+        <p class="text-textSoft text-sm">${t3.desc}</p>
+      </div>
+    </div>
+  </div>
+</div>
+`
+}
+
+// 绑定点击事件
+function bindEvents(){
+  const startBtn = document.getElementById("startBtn");
+  if(startBtn){
+    startBtn.onclick = ()=>{
+      // 初始化胜者组，把全部cp放进去
+      state.winnerBracket = structuredClone(cpList);
+      state.loserBracket = [];
+      state.matchCount=0;
+      nextMatch();
+    }
+  }
+
+  const backBtn = document.getElementById("backHome");
+  if(backBtn){
+    backBtn.onclick = ()=>{ state.page="home"; render(); }
+  }
+
+  const cards = document.querySelectorAll(".cp-card");
+  cards.forEach(card=>{
+    card.onclick = ()=>{
+      const pick = card.dataset.pick;
+      const match = state.currentMatch;
+      state.matchCount++;
+      if(pick === "p1"){
+        winLogic(match.player1, match.player2);
+      }else{
+        winLogic(match.player2, match.player1);
+      }
+      nextMatch();
+    }
+  })
+}
+
+// 双败胜负逻辑
+function winLogic(winner, loser){
+  // 胜者留在胜者组晋级，败者丢入败者组
+  const winIdx = state.winnerBracket.indexOf(winner);
+  if(winIdx !== -1) state.winnerBracket.splice(winIdx,1);
+  state.winnerBracket.push(winner);
+
+  const loseIdx = state.winnerBracket.indexOf(loser);
+  if(loseIdx !== -1){
+    state.winnerBracket.splice(loseIdx,1);
+    state.loserBracket.push(loser);
+  }else{
+    // 败者组再次失败 → 淘汰
+    const loseIdx2 = state.loserBracket.indexOf(loser);
+    if(loseIdx2 !== -1) state.loserBracket.splice(loseIdx2,1);
+  }
+}
+
+// 取出下一场对战，决出TOP3后跳结果页
+function nextMatch(){
+  // 终止条件：选出TOP3
+  if(state.winnerBracket.length ===1 && state.loserBracket.length===2){
+    state.top3 = [state.winnerBracket[0], state.loserBracket[0], state.loserBracket[1]];
+    state.page = "result";
+    render();
+    return;
+  }
+  // 配对：每次取出胜者组前两个对战
+  if(state.winnerBracket.length >= 2){
+    const p1 = state.winnerBracket.shift();
+    const p2 = state.winnerBracket.shift();
+    state.currentMatch = {player1:p1, player2:p2};
+    state.page = "battle";
+  }else if(state.winnerBracket.length ===1 && state.loserBracket.length >=2){
+    // 胜者组只剩冠军，败者组继续内战
+    const p1 = state.loserBracket.shift();
+    const p2 = state.loserBracket.shift();
+    state.currentMatch = {player1:p1, player2:p2};
+    state.page = "battle";
+  }
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
